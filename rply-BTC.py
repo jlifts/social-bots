@@ -2,10 +2,16 @@ import tweepy
 import logging 
 from config import create_api
 import time
+import requests
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
+#add in bitcoin current price retrieval
+response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+data = response.json()
+
+#replies function
 def check_mentions(api, keywords, since_id):
     logger.info("Retrieving mentions")
     new_since_id = since_id
@@ -21,7 +27,7 @@ def check_mentions(api, keywords, since_id):
                 tweet.user.follow()
 
             api.update_status(
-                status="",
+                status="$" + (data["bpi","USD","rate"]),
                 in_reply_to_status_id = tweet.id,
             )
         return new_since_id
@@ -30,7 +36,7 @@ def main():
     api = create_api()
     since_id = 1
     while True:
-        since_id = check_mentions(api, ["help", "support"], since_id)
+        since_id = check_mentions(api, ["BTC", "Bitcoin"], since_id)
         logger.info("Searching...")
         time.sleep(60)
 
