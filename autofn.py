@@ -17,24 +17,20 @@ logger = logging.getLogger()
 #Powered by CoinDesk
 response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
 data = response.json()
-print(data["bpi"]["USD"]["rate"])
+#print(data["bpi"]["USD"]["rate"])
+#If you want to see the price uncomment
 
 #add in ethereum current price retrieval
 response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
 data = response.json()
-print(data["bpi"]["USD"]["rate"])
+#print(data["bpi"]["USD"]["rate"])
+#If you want to see the price uncomment
 
 def streamer():
     api = create_api()
     tweets_listener = TListener(api)
     stream = tweepy.Stream(api.auth, tweets_listener)
     stream.filter(track=["crypto", "ethereum", "DeFi", "science","covid","coffee", "bankless"], languages=["en"])
-
-def tagged():
-
-
-def reply():
-
 
 def follow():
     api = create_api()
@@ -66,10 +62,10 @@ if __name__ == "__main__":
     p1.start()
     p2 = Process(target=follow)
     p2.start()
-    p3 = Process(target=tagged)
-    p3.start()
-    p4 = Process(target=reply)
-    p4.start()
+    #p3 = Process(target=tagged)
+    #p3.start()
+    #p4 = Process(target=reply)
+    #p4.start()
     p5 = Process(target=BTC)
     p5.start()
     p6 = Process(target=ETH)
