@@ -10,6 +10,7 @@ logger = logging.getLogger()
 #add in bitcoin current price retrieval
 response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
 data = response.json()
+print(data["bpi"]["USD"]["rate"])
 
 #replies function
 def check_mentions(api, keywords, since_id):
@@ -20,15 +21,16 @@ def check_mentions(api, keywords, since_id):
         new_since_id = max(tweet.id, new_since_id)
         if tweet.in_reply_to_status_id is not None:
             continue
-        if any(keyword in tweet.text.lower() for keyword in keywords):
+        if any(keywords):
             logger.info(f"Answering to {tweet.user.name}")
 
             if not tweet.user.following:
                 tweet.user.follow()
 
             api.update_status(
-                status="$" + (data["bpi","USD","rate"]),
+                status="$" + (data["bpi"]["USD"]["rate"]),
                 in_reply_to_status_id = tweet.id,
+                auto_populate_reply_metadata = True,
             )
         return new_since_id
 
