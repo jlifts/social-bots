@@ -1,0 +1,1 @@
+wroker: python3 autofn.py

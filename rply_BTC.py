@@ -8,6 +8,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 #add in bitcoin current price retrieval
+#Powered by CoinDesk
 response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
 data = response.json()
 print(data["bpi"]["USD"]["rate"])

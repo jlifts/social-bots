@@ -20,7 +20,7 @@ def random_reply(api, keywords, since_id):
             logger.info(f"Commenting and favoriting {tweet.user.name}")
 
             api.update_status(
-                status= "@"+ tweet.id_str +" I like this tweet, very interesting, hope you have a great day!",
+                status= "@"+ tweet.user.name +" I like this tweet, very interesting, hope you have a great day!",
                 in_reply_to_status_id = tweet.id,
                 auto_populate_reply_metadata = True,
             )

@@ -3,14 +3,26 @@ import logging
 from config import create_api
 import time
 import requests
+import json
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
-#add in bitcoin current price retrieval
-response = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-data = response.json()
-print(data["bpi"]["USD"]["rate"])
+#add in Eth current price retrieval
+url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest'
+parameters = {
+  'start':'1',
+  'limit':'5000',
+  'convert':'USD'
+}
+headers = {
+  'Accepts': 'application/json',
+  'X-CMC_PRO_API_KEY': '46a72f6a-f9a2-4c34-800d-ec1d79f86e07',
+}
+try:
+  response = response.get(url, params=parameters)
+  data = json.loads(response.text)
+  print(data)
 
 #replies function
 def check_mention(api, keywords, since_ids):
