@@ -4,6 +4,7 @@ Fun little experiement with Python, Tweepy, and Heroku to automate Social Media 
 <b> Twitter Bot </b>
 
 *Username: @bluejay_mr*
+
 https://twitter.com/bluejay_mr
 
 This bot is designed to favorite keyword tweets, follow for a follow, like and retweet if mentioned in a tag,
