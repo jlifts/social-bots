@@ -48,13 +48,13 @@ def BTC():
         logger.info("Searching...")
         time.sleep(1000)
 
-def ETH():
-    api = create_api()
-    since_ids = 1
-    while True:
-        since_ids = check_mention(api, ["ETH", "Ethereum", "Ether", "the best crypto"], since_ids)
-        logger.info("Searching...")
-        time.sleep(1000)
+#def ETH():
+    #api = create_api()
+    #since_ids = 1
+    #while True:
+        #since_ids = check_mention(api, ["ETH", "Ethereum", "Ether", "the best crypto"], since_ids)
+        #logger.info("Searching...")
+        #time.sleep(1000)
 
 
 if __name__ == "__main__":
@@ -68,5 +68,5 @@ if __name__ == "__main__":
     #p4.start()
     p5 = Process(target=BTC)
     p5.start()
-    p6 = Process(target=ETH)
-    p6.start()
+    #p6 = Process(target=ETH)
+    #p6.start()
