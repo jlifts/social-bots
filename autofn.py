@@ -8,7 +8,7 @@ from config import create_api
 from follow import follow_followers
 from justlk import TListener
 from rply_BTC import check_mentions
-from rply_ETH import check_mention
+#from rply_ETH import check_mention
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
