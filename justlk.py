@@ -22,7 +22,7 @@ class TListener(tweepy.StreamListener):
         if not tweet.favorited:
             try:
                 tweet.favorite()
-                time.sleep(20)
+                time.sleep(90)
             except Exception as e:
                 logger.error("There was a fav error", exec_info=True)
 
@@ -36,5 +36,5 @@ def main(keywords):
     stream.filter(track=keywords, languages=["en"])
 
 if __name__ == "__main__":
-    main(["crypto", "ethereum", "DeFi", "science","covid","coffee", "bankless", "love"])
+    main(["crypto", "ethereum", "DeFi", "science","covid","coffee", "bankless"])
         

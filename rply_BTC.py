@@ -15,7 +15,7 @@ print(data["bpi"]["USD"]["rate"])
 
 #replies function
 def check_mentions(api, keywords, since_id):
-    logger.info("Retrieving mentions")
+    logger.info("Retrieving Btc mentions")
     new_since_id = since_id
     for tweet in tweepy.Cursor(api.mentions_timeline,
         since_id= since_id).items():
@@ -28,11 +28,12 @@ def check_mentions(api, keywords, since_id):
             if not tweet.user.following:
                 tweet.user.follow()
 
-            api.update_status(
-                status="$" + (data["bpi"]["USD"]["rate"]),
-                in_reply_to_status_id = tweet.id,
-                auto_populate_reply_metadata = True,
-            )
+            if not tweet.in_reply_to_status_id:
+                api.update_status(
+                    status="@"+ tweet.user.name + " it is at " + "$" + (data["bpi"]["USD"]["rate"]),
+                    in_reply_to_status_id = tweet.id,
+                    auto_populate_reply_metadata = True,
+                )
         return new_since_id
 
 def main():
@@ -41,7 +42,7 @@ def main():
     while True:
         since_id = check_mentions(api, ["BTC", "Bitcoin"], since_id)
         logger.info("Searching...")
-        time.sleep(60)
+        time.sleep(120)
 
 if __name__ == "__main__":
     main()

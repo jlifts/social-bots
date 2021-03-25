@@ -26,7 +26,7 @@ try:
 
 #replies function
 def check_mention(api, keywords, since_ids):
-    logger.info("Retrieving mentions")
+    logger.info("Retrieving Eth mentions")
     new_since_ids = since_ids
     for tweet in tweepy.Cursor(api.mentions_timeline,
         since_ids= since_ids).items():
@@ -39,11 +39,12 @@ def check_mention(api, keywords, since_ids):
             if not tweet.user.following:
                 tweet.user.follow()
 
-            api.update_status(
-                status="$" + (data["bpi"]["USD"]["rate"]),
-                in_reply_to_status_id = tweet.id,
-                auto_populate_reply_metadata = True,
-            )
+            if not tweet.in_reply_to_status_id:
+                api.update_status(
+                    status="@"+ tweet.user.name + " it is at " + "$" + (data["bpi"]["USD"]["rate"]) + " better go buy it!",
+                    in_reply_to_status_id = tweet.id,
+                    auto_populate_reply_metadata = True,
+                )
         return new_since_ids
 
 def main():
@@ -52,7 +53,7 @@ def main():
     while True:
         since_ids = check_mention(api, ["ETH", "Etherium", "Ether"], since_ids)
         logger.info("Searching...")
-        time.sleep(60)
+        time.sleep(120)
 
 if __name__ == "__main__":
     main()

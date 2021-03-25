@@ -6,40 +6,39 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
-class tagListener(tweepy.StreamListener):
-    def __init__(self, api):
-        self.api = api
-        self.me = api.me()
+def check_mention(api, since_ids):
+    logger.info("Retrieving tagged mentions")
+    new_since_ids = since_ids
+    for tweet in tweepy.Cursor(api.mentions_timeline,
+        since_ids= since_ids).items():
+        new_since_ids = max(tweet.id, new_since_ids)
+        if tweet.in_reply_to_status_id is not None:
+            continue
+            logger.info(f"Like and reply to {tweet.user.name}")
 
-    def on_status(self, tweet):
-        logger.info(f"The tweet ids {tweet.id}")
-        #ignores replies and if I'm the author
-        if tweet.in_reply_to_status_id is not None or \
-            tweet.user.id == self.me.id:
-            return
-        #Liking if not liked yet
-        if not tweet.favorited:
-            try:
-                tweet.favorite()
-                time.sleep(10)
-            except Exception as e:
-                logger.error("There was a fav error", exec_info=True)
+            if not tweet.favorited:
+                try:
+                    tweet.favorite()
+                    time.sleep(10)
+                except Exception as e:
+                    logger.error("There was a fav error", exec_info=True)
         #Retweeting it for content
-        if not tweet.retweeted:
-            try:
-                tweet.retweet()
-                time.sleep(10)
-            except Exception as e:
-                logger.error("error on Retweet", exc_info=True)
+            if not tweet.retweeted:
+                try:
+                    tweet.retweet()
+                    time.sleep(10)
+                except Exception as e:
+                    logger.error("error on Retweet", exc_info=True)
 
-    def on_error(self,status):
-        logger.error(status)
+        return new_since_ids
 
-def main(keywords):
+def main():
     api = create_api()
-    tag_listener = tagListener(api)
-    stream = tweepy.Stream(api.auth, tag_listener)
-    stream.filter(languages=["en"])
+    since_ids = 1
+    while True:
+        since_ids = check_mention(api, since_ids)
+        logger.info("Searching...")
+        time.sleep(20)
 
 if __name__ == "__main__":
     main()
