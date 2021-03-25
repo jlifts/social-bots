@@ -19,7 +19,7 @@ def check_mentions(api, keywords, since_id):
     new_since_id = since_id
     for tweet in tweepy.Cursor(api.mentions_timeline,
         since_id= since_id).items():
-        new_since_id = max(tweet.id, new_since_id)
+        new_since_id = max(tweet.id, new_since_id) #this may be where it keeps replying to same tweets
         if tweet.in_reply_to_status_id is not None:
             continue
         if any(keywords):
@@ -30,7 +30,7 @@ def check_mentions(api, keywords, since_id):
 
             if not tweet.in_reply_to_status_id:
                 api.update_status(
-                    status="@"+ tweet.user.name + " it is at " + "$" + (data["bpi"]["USD"]["rate"]),
+                    status="@"+ tweet.user.screen_name + " it is at " + "$" + (data["bpi"]["USD"]["rate"]),
                     in_reply_to_status_id = tweet.id,
                     auto_populate_reply_metadata = True,
                 )

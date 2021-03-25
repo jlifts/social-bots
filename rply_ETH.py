@@ -30,7 +30,7 @@ def check_mention(api, keywords, since_ids):
     new_since_ids = since_ids
     for tweet in tweepy.Cursor(api.mentions_timeline,
         since_ids= since_ids).items():
-        new_since_ids = max(tweet.id, new_since_ids)
+        new_since_ids = max(tweet.id, new_since_ids) #this may be where it keeps replying to same tweets
         if tweet.in_reply_to_status_id is not None:
             continue
         if any(keywords):

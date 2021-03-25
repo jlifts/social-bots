@@ -6,14 +6,19 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
+def __init__(self, api):
+    self.api = api
+    self.me = api.me()
+
 def check_mention(api, since_ids):
     logger.info("Retrieving tagged mentions")
     new_since_ids = since_ids
     for tweet in tweepy.Cursor(api.mentions_timeline,
         since_ids= since_ids).items():
-        new_since_ids = max(tweet.id, new_since_ids)
+        new_since_ids = max(tweet.id, new_since_ids) #this may be where it keeps replying to same tweets
         if tweet.in_reply_to_status_id is not None:
             continue
+        if any:
             logger.info(f"Like and reply to {tweet.user.name}")
 
             if not tweet.favorited:
@@ -38,7 +43,7 @@ def main():
     while True:
         since_ids = check_mention(api, since_ids)
         logger.info("Searching...")
-        time.sleep(20)
+        time.sleep(120)
 
 if __name__ == "__main__":
     main()
