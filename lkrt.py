@@ -43,5 +43,5 @@ def main(keywords):
     stream.filter(track=keywords, languages=["en"])
 
 if __name__ == "__main__":
-    main(["Tweepy", "coffee", "crypto", "Ethereum", "DeFi", "bankless", "UniSwap", "robots", "happy"])
+    main(["Tweepy", "coffee", "crypto", "Ethereum", "DeFi", "bankless", "UniSwap", "robots"])
         
