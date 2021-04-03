@@ -9,6 +9,7 @@ from follow import follow_followers
 from justlk import TListener
 from rply_BTC import check_mentions
 #from rply_ETH import check_mention
+from tagged import check_mentioning
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -48,6 +49,14 @@ def BTC():
         logger.info("Searching...")
         time.sleep(1000)
 
+def tagged():
+    api = create_api()
+    since_ids = 1
+    while True:
+        since_ids = check_mentioning(api, since_ids)
+        logger.info("Searching...")
+        time.sleep(300)
+
 #def ETH():
     #api = create_api()
     #since_ids = 1
@@ -62,8 +71,8 @@ if __name__ == "__main__":
     p1.start()
     p2 = Process(target=follow)
     p2.start()
-    #p3 = Process(target=tagged)
-    #p3.start()
+    p3 = Process(target=tagged)
+    p3.start()
     #p4 = Process(target=reply)
     #p4.start()
     p5 = Process(target=BTC)

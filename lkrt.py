@@ -29,7 +29,7 @@ class TListener(tweepy.StreamListener):
         if not tweet.retweeted:
             try:
                 tweet.retweet()
-                time.sleep(10)
+                time.sleep(90)
             except Exception as e:
                 logger.error("error on Retweet", exc_info=True)
 
@@ -43,5 +43,5 @@ def main(keywords):
     stream.filter(track=keywords, languages=["en"])
 
 if __name__ == "__main__":
-    main(["Tweepy", "coffee", "Crypto", "Ethereum", "DeFi", "bankless", "UniSwap"])
+    main(["Tweepy", "coffee", "crypto", "Ethereum", "DeFi", "bankless", "UniSwap", "robots", "happy"])
         
