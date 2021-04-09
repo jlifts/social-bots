@@ -7,18 +7,12 @@ import time
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
-class TListener(tweepy.StreamListener):
-    def __init__(self, api):
-        self.api = api
-        self.me = api.me()
 
-    def on_status(self, tweet):
-        logger.info(f"The tweet ids {tweet.id}")
-        #ignores replies and if I'm the author
-        if tweet.in_reply_to_status_id is not None or \
-            tweet.user.id == self.me.id:
-            return
-        #Liking if not liked yet
+def on_status(self, tweet):
+    logger.info(f"The tweet ids {tweet.id}")
+    #ignores replies and if I'm the author
+    if api.get_user(screen_name='Algorand'):
+    #Liking if not liked yet
         if not tweet.favorited:
             try:
                 tweet.favorite()
@@ -29,7 +23,7 @@ class TListener(tweepy.StreamListener):
         if not tweet.retweeted:
             try:
                 tweet.retweet()
-                time.sleep(180)
+                time.sleep(90)
             except Exception as e:
                 logger.error("error on Retweet", exc_info=True)
 
@@ -38,10 +32,8 @@ class TListener(tweepy.StreamListener):
 
 def main(keywords):
     api = create_api()
-    tweets_listener = TListener(api)
-    stream = tweepy.Stream(api.auth, tweets_listener)
-    stream.filter(track=keywords, languages=["en"])
+    
 
 if __name__ == "__main__":
-    main(["#blockchain", "coffee", "#Crypto", "#Ethereum", "$ETH", "#DeFi", "#defi", "#bankless", "#Uniswap", "#Chainlink"])
+    main([])
         

@@ -52,7 +52,7 @@ def main():
     while True:
         check_mentions(api)
         logger.info("Searching...")
-        time.sleep(120)
+        time.sleep(140)
 
 if __name__ == "__main__":
     main()
