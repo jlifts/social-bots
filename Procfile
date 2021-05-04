@@ -1,1 +1,1 @@
-worker: python3 follow.py
+worker: python3 tweet.py
