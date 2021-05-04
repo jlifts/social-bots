@@ -42,7 +42,7 @@ def main():
     api = create_api()
     while True:
         crypto_updates(api)
-        time.sleep(120)
+        time.sleep(24 * 3600)
 
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ import time
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
+
 class TListener(tweepy.StreamListener):
     def __init__(self, api):
         self.api = api
@@ -14,11 +15,11 @@ class TListener(tweepy.StreamListener):
 
     def on_status(self, tweet):
         logger.info(f"The tweet ids {tweet.id}")
-        #ignores replies and if I'm the author
+        # ignores replies and if I'm the author
         if tweet.in_reply_to_status_id is not None or \
-            tweet.user.id == self.me.id:
+                tweet.user.id == self.me.id:
             return
-        #Liking if not liked yet
+        # Liking if not liked yet
         if not tweet.favorited:
             try:
                 tweet.favorite()
@@ -26,8 +27,9 @@ class TListener(tweepy.StreamListener):
             except Exception as e:
                 logger.error("There was a fav error", exec_info=True)
 
-    def on_error(self,status):
+    def on_error(self, status):
         logger.error(status)
+
 
 def main(keywords):
     api = create_api()
@@ -35,6 +37,7 @@ def main(keywords):
     stream = tweepy.Stream(api.auth, tweets_listener)
     stream.filter(track=keywords, languages=["en"])
 
+
 if __name__ == "__main__":
-    main(["#Crypto", "Ethereum","$ETH", "DeFi", "#DeFi", "programming", "coffee", "bankless", "#NFT"])
-        
+    main(["#Crypto", "Ethereum", "$ETH", "DeFi", "#DeFi",
+         "programming", "bankless", "#NFT", "#Chainlink", "$LINK"])

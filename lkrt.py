@@ -7,6 +7,7 @@ import time
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
+
 class TListener(tweepy.StreamListener):
     def __init__(self, api):
         self.api = api
@@ -14,18 +15,18 @@ class TListener(tweepy.StreamListener):
 
     def on_status(self, tweet):
         logger.info(f"The tweet ids {tweet.id}")
-        #ignores replies and if I'm the author
+        # ignores replies and if I'm the author
         if tweet.in_reply_to_status_id is not None or \
-            tweet.user.id == self.me.id:
+                tweet.user.id == self.me.id:
             return
-        #Liking if not liked yet
+        # Liking if not liked yet
         if not tweet.favorited:
             try:
                 tweet.favorite()
                 time.sleep(10)
             except Exception as e:
                 logger.error("There was a fav error", exec_info=True)
-        #Retweeting it for content
+        # Retweeting it for content
         if not tweet.retweeted:
             try:
                 tweet.retweet()
@@ -33,8 +34,9 @@ class TListener(tweepy.StreamListener):
             except Exception as e:
                 logger.error("error on Retweet", exc_info=True)
 
-    def on_error(self,status):
+    def on_error(self, status):
         logger.error(status)
+
 
 def main(keywords):
     api = create_api()
@@ -42,6 +44,7 @@ def main(keywords):
     stream = tweepy.Stream(api.auth, tweets_listener)
     stream.filter(track=keywords, languages=["en"])
 
+
 if __name__ == "__main__":
-    main(["#blockchain", "coffee", "#Crypto", "#Ethereum", "$ETH", "#DeFi", "#defi", "#bankless", "#Uniswap", "#Chainlink"])
-        
+    main(["#blockchain", "#Crypto", "#Ethereum", "$ETH", "#DeFi", "#defi",
+         "#bankless", "#Uniswap", "#Chainlink", "$LINK", "Chainlink", "DeFi"])
